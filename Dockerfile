@@ -8,7 +8,7 @@ RUN apk update
 RUN apk add bash curl file git unzip which zip gcompat
 
 # Download and extract Flutter SDK
-RUN mkdir $FLUTTER_HOME \
+RUN mkdir -p $FLUTTER_HOME \
     && cd $FLUTTER_HOME \
     && curl --fail --remote-time --silent --location -O https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz \
     && tar xf flutter_linux_${FLUTTER_VERSION}-stable.tar.xz --strip-components=1 \
