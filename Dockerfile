@@ -1,9 +1,9 @@
 FROM alpine
 ENV FLUTTER_VERSION="3.16.9"
-ENV FLUTTER_HOME "/home/bschuele/.flutter-sdk"
+ENV FLUTTER_HOME "/opt/flutter-sdk"
 ENV PATH $PATH:$FLUTTER_HOME/bin
 
-## Make sure to install gcompat
+# Make sure to install gcompat
 RUN apk update
 RUN apk add bash curl file git unzip which zip gcompat
 
@@ -14,10 +14,13 @@ RUN mkdir -p $FLUTTER_HOME \
     && tar xf flutter_linux_${FLUTTER_VERSION}-stable.tar.xz --strip-components=1 \
     && rm flutter_linux_${FLUTTER_VERSION}-stable.tar.xz
 
-# # Run flutter doctor
+# allow run flutter as root
+RUN git config --global --add safe.directory $FLUTTER_HOME
+
+# Run flutter doctor
 RUN flutter doctor
 
-# # Enable flutter web
+# Enable flutter web
 RUN flutter channel master
 RUN flutter upgrade
 RUN flutter config --enable-web
